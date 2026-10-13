@@ -39,17 +39,7 @@ function showToast(message, type, duration) {
   const toastItem = document.createElement('div');
   toastItem.className = 'toast ' + toastType;
 
-  // Ikon visual sederhana sesuai tipe toast
-  let iconHtml = 'ℹ️ ';
-  if (toastType === 'success') {
-    iconHtml = '✅ ';
-  } else if (toastType === 'error') {
-    iconHtml = '⚠️ ';
-  }
-
   toastItem.textContent = message;
-  toastItem.insertAdjacentHTML('afterbegin', '<span style="margin-right: 6px;">' + iconHtml + '</span>');
-
   container.appendChild(toastItem);
 
   // Otomatis hapus elemen toast setelah durasi selesai

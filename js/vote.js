@@ -256,7 +256,7 @@ function createBallotCardElement(paslon, idx) {
   const fotoUrl = escapeHtml(rawFoto);
 
   let cardHtml = '';
-  cardHtml += '<div class="ballot-check" id="check-' + paslon.id_paslon + '">&#10003;</div>';
+  cardHtml += '<div class="ballot-check" id="check-' + paslon.id_paslon + '"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg></div>';
   cardHtml += '<div class="ballot-photo">';
   cardHtml += '  <img src="' + fotoUrl + '" alt="' + labelPaslon + '" referrerpolicy="no-referrer" loading="lazy">';
   cardHtml += '</div>';
@@ -311,14 +311,14 @@ function formatBallotVisiMisiHtml(text) {
   let html = '';
   if (visiPart) {
     html += '<div class="ballot-visi-block">';
-    html += '  <h4 class="ballot-block-title"><span class="title-sparkle">&#10022;</span> VISI</h4>';
+    html += '  <h4 class="ballot-block-title">VISI</h4>';
     html += '  <p class="ballot-visi-desc">"' + escapeHtml(visiPart) + '"</p>';
     html += '</div>';
   }
 
   if (misiPart) {
     html += '<div class="ballot-misi-block">';
-    html += '  <h4 class="ballot-block-title"><span class="title-sparkle">&#10022;</span> MISI</h4>';
+    html += '  <h4 class="ballot-block-title">MISI</h4>';
     const items = misiPart.split(/(?:;|\n|,\s*(?=[A-Z0-9]))+/).map(function (s) { return s.trim(); }).filter(function (s) { return s.length > 0; });
     if (items.length > 1) {
       html += '  <ul class="ballot-misi-list">';
@@ -360,7 +360,7 @@ function openBallotCandidateDetail(activeIdx) {
   detailContainer.style.display = 'flex';
 
   if (promptEl) {
-    promptEl.textContent = 'PELAJARI VISI, MISI &amp; TENTUKAN PILIHAN ANDA';
+    promptEl.textContent = 'PELAJARI VISI, MISI & TENTUKAN PILIHAN ANDA';
   }
 
   const noUrut = (activePaslon.nomor_urut < 10 ? '0' : '') + activePaslon.nomor_urut;
@@ -386,7 +386,7 @@ function openBallotCandidateDetail(activeIdx) {
     leftHtml += '    <p class="card-slogan">"' + slogan + '"</p>';
   }
   leftHtml += '    <button type="button" class="ballot-btn-coblos-final" onclick="window.VoteController.proceedToConfirmation(' + activeIdx + ')">';
-  leftHtml += '      <span>COBLOS PASLON INI &check;</span>';
+  leftHtml += '      <span>COBLOS</span>';
   leftHtml += '    </button>';
   leftHtml += '    <button type="button" class="ballot-btn-batal" onclick="window.VoteController.closeBallotCandidateDetail()">';
   leftHtml += '      &larr; Lihat Semua Paslon';
@@ -399,19 +399,18 @@ function openBallotCandidateDetail(activeIdx) {
   centerHtml += '<div class="ballot-visi-panel">';
   centerHtml += '  <div class="ballot-visi-panel-header">';
   centerHtml += '    <div class="ballot-visi-panel-title">';
-  centerHtml += '      <span class="title-sparkle">&#10022;</span>';
   centerHtml += '      <span>VISI &amp; MISI ' + label + '</span>';
   centerHtml += '    </div>';
-  centerHtml += '    <button type="button" class="ballot-btn-close-detail" onclick="window.VoteController.closeBallotCandidateDetail()">✕ Tutup</button>';
+  centerHtml += '    <button type="button" class="ballot-btn-close-detail" onclick="window.VoteController.closeBallotCandidateDetail()">Tutup</button>';
   centerHtml += '  </div>';
   centerHtml += '  <div class="ballot-visi-panel-body">';
   centerHtml += formatBallotVisiMisiHtml(activePaslon.visi_misi);
   centerHtml += '  </div>';
   centerHtml += '  <div class="ballot-visi-panel-footer">';
-  centerHtml += '    <button type="button" class="btn-primary" style="width: auto; padding: 8px 24px; font-size: 0.84rem;" onclick="window.VoteController.proceedToConfirmation(' + activeIdx + ')">';
-  centerHtml += '      Lanjutkan &amp; Coblos Pilihan &rarr;';
+  centerHtml += '    <button type="button" class="btn-primary" style="width: auto; padding: 8px 20px; font-size: 0.82rem;" onclick="window.VoteController.proceedToConfirmation(' + activeIdx + ')">';
+  centerHtml += '      COBLOS &rarr;';
   centerHtml += '    </button>';
-  centerHtml += '    <button type="button" class="ballot-btn-close-detail" onclick="window.VoteController.closeBallotCandidateDetail()">⮌ Kembali</button>';
+  centerHtml += '    <button type="button" class="ballot-btn-close-detail" onclick="window.VoteController.closeBallotCandidateDetail()">Kembali</button>';
   centerHtml += '  </div>';
   centerHtml += '</div>';
 
@@ -680,6 +679,29 @@ function executeFinalReset() {
   }
 }
 
+/**
+ * Fitur logout manual dari bilik suara ke beranda walaupun belum memilih
+ * (misal siswa ingin melihat kembali video orasi paslon di beranda)
+ */
+function handleManualLogout() {
+  const confirmExit = confirm('Keluar dari bilik suara dan kembali ke beranda untuk melihat orasi paslon?');
+  if (confirmExit) {
+    stopBoothTimer();
+    if (window.AuthManager && typeof window.AuthManager.logoutVoter === 'function') {
+      window.AuthManager.logoutVoter();
+    }
+    if (window.App && typeof window.App.switchView === 'function') {
+      window.App.switchView(window.App.VIEWS.HOME);
+      if (typeof window.App.goToSection === 'function') {
+        window.App.goToSection(0);
+      }
+    }
+    if (window.AuthManager && typeof window.AuthManager.showToast === 'function') {
+      window.AuthManager.showToast('Anda telah keluar. Silakan tonton orasi paslon di beranda.', 'info');
+    }
+  }
+}
+
 // Ekspor modul VoteController ke window global
 window.VoteController = {
   initBooth: initBooth,
@@ -689,5 +711,6 @@ window.VoteController = {
   openConfirmModal: openConfirmModal,
   closeConfirmModal: closeConfirmModal,
   submitVoteTransaction: submitVoteTransaction,
-  executeFinalReset: executeFinalReset
+  executeFinalReset: executeFinalReset,
+  handleManualLogout: handleManualLogout
 };

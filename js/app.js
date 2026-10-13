@@ -63,14 +63,14 @@ function formatVisiMisiHtml(text) {
   let html = '';
   if (visiPart) {
     html += '<div class="visi-block">';
-    html += '  <h4 class="block-title"><span class="title-sparkle">&#10022;</span> VISI</h4>';
+    html += '  <h4 class="block-title">VISI</h4>';
     html += '  <p class="visi-desc">"' + escapeHtml(visiPart) + '"</p>';
     html += '</div>';
   }
 
   if (misiPart) {
     html += '<div class="misi-block">';
-    html += '  <h4 class="block-title"><span class="title-sparkle">&#10022;</span> MISI</h4>';
+    html += '  <h4 class="block-title">MISI</h4>';
     const items = misiPart.split(/(?:;|\n|,\s*(?=[A-Z0-9]))+/).map(function (s) { return s.trim(); }).filter(function (s) { return s.length > 0; });
     if (items.length > 1) {
       html += '  <ul class="misi-list">';
@@ -134,7 +134,7 @@ function selectHomeCandidate(activeIdx) {
   if (slogan) {
     leftHtml += '    <p class="card-slogan">"' + slogan + '"</p>';
   }
-  leftHtml += '    <button type="button" class="card-btn-close" onclick="window.App.closeHomeCandidateDetail()">✕ Tutup</button>';
+  leftHtml += '    <button type="button" class="card-btn-close" onclick="window.App.closeHomeCandidateDetail()">Tutup</button>';
   leftHtml += '  </div>';
   leftHtml += '</div>';
 
@@ -143,19 +143,18 @@ function selectHomeCandidate(activeIdx) {
   centerHtml += '<div class="inline-visi-panel">';
   centerHtml += '  <div class="visi-panel-header">';
   centerHtml += '    <div class="visi-panel-title">';
-  centerHtml += '      <span class="title-sparkle">&#10022;</span>';
   centerHtml += '      <span>VISI &amp; MISI ' + label + '</span>';
   centerHtml += '    </div>';
-  centerHtml += '    <button type="button" class="btn-close-detail" onclick="window.App.closeHomeCandidateDetail()">✕ Tutup</button>';
+  centerHtml += '    <button type="button" class="btn-close-detail" onclick="window.App.closeHomeCandidateDetail()">Tutup</button>';
   centerHtml += '  </div>';
   centerHtml += '  <div class="visi-panel-body">';
   centerHtml += formatVisiMisiHtml(activePaslon.visi_misi);
   centerHtml += '  </div>';
   centerHtml += '  <div class="visi-panel-footer">';
   centerHtml += '    <button type="button" class="btn-orasi-shortcut" onclick="window.App.goToSection(' + (activeIdx + 2) + ')">';
-  centerHtml += '      <span>🎬 Tonton Video Orasi</span>';
+  centerHtml += '      <span>Tonton Video Orasi</span>';
   centerHtml += '    </button>';
-  centerHtml += '    <button type="button" class="btn-close-detail" onclick="window.App.closeHomeCandidateDetail()">⮌ Semua Paslon</button>';
+  centerHtml += '    <button type="button" class="btn-close-detail" onclick="window.App.closeHomeCandidateDetail()">Semua Paslon</button>';
   centerHtml += '  </div>';
   centerHtml += '</div>';
 
@@ -272,7 +271,7 @@ function renderHomeCandidateCards(list) {
       html += '    <p class="card-slogan">"' + slogan + '"</p>';
     }
     html += '    <div class="card-btn-visi">';
-    html += '      <span>&#10022; Visi &amp; Misi</span>';
+    html += '      <span>Visi &amp; Misi</span>';
     html += '    </div>';
     html += '  </div>';
     html += '</article>';

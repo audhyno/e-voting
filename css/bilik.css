@@ -81,6 +81,38 @@
   letter-spacing: 0.5px;
 }
 
+.bilik-topbar-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-bilik-logout {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(255, 255, 255, 0.16);
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
+  color: #ffffff;
+  padding: 7px 16px;
+  border-radius: 24px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: all 0.35s cubic-bezier(0.25, 1, 0.4, 1);
+}
+
+.btn-bilik-logout:hover {
+  background: rgba(239, 68, 68, 0.85);
+  border-color: #fca5a5;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 14px rgba(239, 68, 68, 0.45);
+}
+
 .timer-badge {
   display: flex;
   align-items: center;
@@ -465,23 +497,23 @@
 
 .ballot-btn-coblos-final {
   width: 100%;
-  margin-top: 14px;
-  padding: 12px 18px;
+  margin-top: 10px;
+  padding: 9px 16px;
   border: 1.5px solid rgba(255, 255, 255, 0.65);
   border-radius: 24px;
   background: linear-gradient(135deg, #10b981 0%, #059669 100%);
   color: #ffffff;
   font-family: var(--font-serif-sub);
-  font-size: 0.88rem;
+  font-size: 0.84rem;
   font-weight: 800;
-  letter-spacing: 2px;
+  letter-spacing: 1.5px;
   cursor: pointer;
-  box-shadow: 0 8px 24px rgba(16, 185, 129, 0.45);
+  box-shadow: 0 6px 20px rgba(16, 185, 129, 0.45);
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 8px;
-  transition: all 0.65s cubic-bezier(0.25, 1, 0.4, 1);
+  gap: 6px;
+  transition: all 0.45s cubic-bezier(0.25, 1, 0.4, 1);
 }
 
 .ballot-btn-coblos-final:hover {
@@ -679,6 +711,24 @@
   box-shadow: 0 4px 14px rgba(255, 255, 255, 0.5);
 }
 
+.ballot-dock {
+  width: clamp(160px, 16vw, 190px);
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.ballot-dock-header {
+  font-family: var(--font-serif-sub);
+  font-size: 0.74rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: rgba(255, 255, 255, 0.9);
+  text-transform: uppercase;
+  text-align: center;
+}
+
 .ballot-dock-card {
   flex: 1;
   background: rgba(255, 255, 255, 0.18);
@@ -692,23 +742,23 @@
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: all 0.65s cubic-bezier(0.25, 1, 0.4, 1);
+  transition: all 0.45s cubic-bezier(0.25, 1, 0.4, 1);
   text-align: center;
   position: relative;
   box-shadow: 0 10px 24px rgba(0, 35, 75, 0.25);
 }
 
 .ballot-dock-card:hover {
-  background: rgba(255, 255, 255, 0.3);
-  border-color: rgba(255, 255, 255, 0.8);
+  background: rgba(255, 255, 255, 0.32);
+  border-color: rgba(255, 255, 255, 0.85);
   transform: translateX(-4px) scale(1.02);
   box-shadow: 0 14px 30px rgba(0, 40, 85, 0.35);
 }
 
 .ballot-dock-photo {
-  width: 52px;
+  width: 58px;
   aspect-ratio: 3 / 4;
-  height: 68px;
+  height: 76px;
   border-radius: 10px;
   overflow: hidden;
   position: relative;
@@ -747,9 +797,9 @@
 }
 
 .ballot-dock-names {
-  font-size: 0.68rem;
+  font-size: 0.7rem;
   font-weight: 600;
-  color: rgba(255, 255, 255, 0.88);
+  color: rgba(255, 255, 255, 0.9);
   margin-top: 2px;
   line-height: 1.35;
   display: -webkit-box;
@@ -759,7 +809,7 @@
 }
 
 .ballot-dock-action-hint {
-  font-size: 0.62rem;
+  font-size: 0.65rem;
   font-weight: 700;
   color: #38bdf8;
   margin-top: 4px;
