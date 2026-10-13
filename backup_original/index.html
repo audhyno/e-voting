@@ -1,0 +1,553 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>E-Voting OSIS SMAN 1 Pontianak - Single Page Application</title>
+
+  <meta name="description" content="Aplikasi E-Voting Pemilihan Ketua dan Wakil Ketua OSIS SMAN 1 Pontianak periode 2026/2027.">
+  <meta property="og:title" content="E-Voting OSIS SMAN 1 Pontianak - Single Page Application">
+  <meta property="og:description" content="Aplikasi E-Voting Pemilihan Ketua dan Wakil Ketua OSIS SMAN 1 Pontianak periode 2026/2027.">
+
+  <!-- Google Fonts: Serif Elegan & Sans-Serif Modern -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@700;900&family=Cinzel:wght@600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Master Modular Stylesheets (zianxy Architecture) -->
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/beranda.css">
+  <link rel="stylesheet" href="css/bilik.css">
+  <link rel="stylesheet" href="css/modals.css">
+</head>
+<body>
+
+  <!-- Root SPA Application Container -->
+  <main class="spa-app" id="spaApp">
+
+    <!-- ======================================================================
+         VIEW 1: HOME PAGE (SCROLL SNAP 6 SECTION FULLSCREEN 100VH)
+         ====================================================================== -->
+    <section class="spa-view active" id="view-home">
+
+      <!-- Floating Pagination Dots di Kanan Layar -->
+      <nav class="pagination-dots" aria-label="Navigasi Section Halaman">
+        <button type="button" class="dot-item active" data-index="0" data-label="Beranda Utama" onclick="window.App.goToSection(0)"></button>
+        <button type="button" class="dot-item" data-index="1" data-label="Kandidat Paslon" onclick="window.App.goToSection(1)"></button>
+        <button type="button" class="dot-item" data-index="2" data-label="Orasi Paslon 1" onclick="window.App.goToSection(2)"></button>
+        <button type="button" class="dot-item" data-index="3" data-label="Orasi Paslon 2" onclick="window.App.goToSection(3)"></button>
+        <button type="button" class="dot-item" data-index="4" data-label="Orasi Paslon 3" onclick="window.App.goToSection(4)"></button>
+        <button type="button" class="dot-item" data-index="5" data-label="Quick Count &amp; Bilik" onclick="window.App.goToSection(5)"></button>
+      </nav>
+
+      <!-- Scroll Snap Container -->
+      <div class="snap-container" id="snapContainer">
+
+        <!-- SECTION 0: HERO HEADER UTAMA -->
+        <header class="snap-section section-hero" id="sec-0">
+          <div class="crystal-overlay">
+            <div class="shard shard-tl"></div>
+            <div class="shard shard-tr"></div>
+          </div>
+
+          <nav class="section-nav" id="homeBrandNav">
+            <img 
+              src="assets/images/e-voting.png" 
+              onerror="this.src='https://raw.githubusercontent.com/fauziopa/e-voting/main/assets/images/e-voting.png';" 
+              alt="Logo E-Voting" 
+              class="brand-logo logo-evoting"
+              title="Kembali ke Beranda Utama"
+              onclick="window.App.goToSection(0)"
+            >
+            <img 
+              src="assets/images/sman1-pontianak.png" 
+              onerror="this.src='https://raw.githubusercontent.com/fauziopa/e-voting/main/assets/images/sman1-pontianak.png';" 
+              alt="Logo SMAN 1 Pontianak" 
+              class="brand-logo logo-sman"
+              title="Kembali ke Beranda Utama"
+              onclick="window.App.goToSection(0)"
+            >
+          </nav>
+
+          <div class="hero-content">
+            <h1 class="title-pemilihan">PEMILIHAN</h1>
+            <h2 class="title-sub">KETUA &amp; WAKIL KETUA</h2>
+            <h2 class="title-osis">OSIS</h2>
+            <div class="school-badge">SMAN 1 PONTIANAK &bull; PERIODE 2026/2027</div>
+          </div>
+
+          <div class="hero-footer-hint" onclick="window.App.goToSection(1)">
+            <span class="hint-text">Gulir untuk Melihat Paslon</span>
+            <svg class="hint-arrow" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </div>
+        </header>
+
+        <!-- SECTION 1: PROFIL 3 PASLON -->
+        <section class="snap-section" id="sec-1">
+          <div class="crystal-overlay">
+            <div class="shard shard-tl"></div>
+            <div class="shard shard-br"></div>
+          </div>
+
+          <!-- Subjudul Interaktif: Sentuh/Klik untuk Membaca Visi & Misi Paslon -->
+          <div class="paslon-section-header">
+            <button type="button" class="btn-subjudul-visi" onclick="window.App.openVisiMisiModal(0)">
+              <span class="subjudul-sparkle">&#10022;</span>
+              <span class="subjudul-text">VISI &amp; MISI KANDIDAT PASLON</span>
+            </button>
+          </div>
+
+          <div class="paslon-stage" id="paslonStage">
+            <div class="candidates-grid" id="homeCandidatesGrid">
+              <!-- Kartu Skeleton Shimmer Loading (Default State sebelum data Spreadsheet masuk) -->
+              <article class="skeleton-card" aria-hidden="true">
+                <div class="skeleton-photo skeleton-shimmer">
+                  <div class="skeleton-badge"></div>
+                </div>
+                <div class="skeleton-meta">
+                  <div class="skeleton-title skeleton-shimmer"></div>
+                  <div class="skeleton-names skeleton-shimmer"></div>
+                  <div class="skeleton-slogan skeleton-shimmer"></div>
+                  <div class="skeleton-btn skeleton-shimmer"></div>
+                </div>
+              </article>
+
+              <article class="skeleton-card" aria-hidden="true">
+                <div class="skeleton-photo skeleton-shimmer">
+                  <div class="skeleton-badge"></div>
+                </div>
+                <div class="skeleton-meta">
+                  <div class="skeleton-title skeleton-shimmer"></div>
+                  <div class="skeleton-names skeleton-shimmer"></div>
+                  <div class="skeleton-slogan skeleton-shimmer"></div>
+                  <div class="skeleton-btn skeleton-shimmer"></div>
+                </div>
+              </article>
+
+              <article class="skeleton-card" aria-hidden="true">
+                <div class="skeleton-photo skeleton-shimmer">
+                  <div class="skeleton-badge"></div>
+                </div>
+                <div class="skeleton-meta">
+                  <div class="skeleton-title skeleton-shimmer"></div>
+                  <div class="skeleton-names skeleton-shimmer"></div>
+                  <div class="skeleton-slogan skeleton-shimmer"></div>
+                  <div class="skeleton-btn skeleton-shimmer"></div>
+                </div>
+              </article>
+            </div>
+            <!-- Kontainer Inline Detail & Slider Visi Misi yang Otomatis Bergeser Saat Paslon Dipilih -->
+            <div class="inline-detail-container" id="inlineDetailContainer" style="display: none;" aria-live="polite"></div>
+          </div>
+
+          <div class="section-footer-note" id="paslonSectionFooterNote">
+            Sentuh kartu untuk membaca visi-misi atau gulir ke bawah untuk menyaksikan video orasi
+          </div>
+        </section>
+
+        <!-- SECTION 2: ORASI PASLON 1 MONITOR TV GLOWING -->
+        <section class="snap-section" id="sec-2">
+          <div class="crystal-overlay">
+            <div class="shard shard-tr"></div>
+            <div class="shard shard-bl"></div>
+          </div>
+
+          <div class="orasi-stage">
+            <div class="monitor-unit">
+              <div class="tv-frame">
+                <div class="tv-screen">
+                  <iframe 
+                    id="iframeOrasi1"
+                    src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?enablejsapi=1&controls=1&rel=0" 
+                    title="Orasi Paslon 1" 
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                  </iframe>
+                  <div class="tv-led"></div>
+                </div>
+              </div>
+              <div class="btn-orasi-capsule" onclick="window.App.openVisiMisiModal(0)">
+                <span class="sparkle-icon sparkle-tl">&#10022;</span>
+                <span class="btn-orasi-text" id="labelOrasi1">ORASI PASLON 1</span>
+                <span class="sparkle-icon sparkle-br">&#10022;</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-footer-note">
+            SMAN 1 Pontianak &bull; Orasi Visi &amp; Misi Paslon Nomor Urut 01
+          </div>
+        </section>
+
+        <!-- SECTION 3: ORASI PASLON 2 MONITOR TV GLOWING -->
+        <section class="snap-section" id="sec-3">
+          <div class="crystal-overlay">
+            <div class="shard shard-tl"></div>
+            <div class="shard shard-br"></div>
+          </div>
+
+          <div class="orasi-stage">
+            <div class="monitor-unit">
+              <div class="tv-frame">
+                <div class="tv-screen">
+                  <iframe 
+                    id="iframeOrasi2"
+                    src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?enablejsapi=1&controls=1&rel=0" 
+                    title="Orasi Paslon 2" 
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                  </iframe>
+                  <div class="tv-led"></div>
+                </div>
+              </div>
+              <div class="btn-orasi-capsule" onclick="window.App.openVisiMisiModal(1)">
+                <span class="sparkle-icon sparkle-tl">&#10022;</span>
+                <span class="btn-orasi-text" id="labelOrasi2">ORASI PASLON 2</span>
+                <span class="sparkle-icon sparkle-br">&#10022;</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-footer-note">
+            SMAN 1 Pontianak &bull; Orasi Visi &amp; Misi Paslon Nomor Urut 02
+          </div>
+        </section>
+
+        <!-- SECTION 4: ORASI PASLON 3 MONITOR TV GLOWING -->
+        <section class="snap-section" id="sec-4">
+          <div class="crystal-overlay">
+            <div class="shard shard-tr"></div>
+            <div class="shard shard-bl"></div>
+          </div>
+
+          <div class="orasi-stage">
+            <div class="monitor-unit">
+              <div class="tv-frame">
+                <div class="tv-screen">
+                  <iframe 
+                    id="iframeOrasi3"
+                    src="https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?enablejsapi=1&controls=1&rel=0" 
+                    title="Orasi Paslon 3" 
+                    referrerpolicy="strict-origin-when-cross-origin"
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                    allowfullscreen>
+                  </iframe>
+                  <div class="tv-led"></div>
+                </div>
+              </div>
+              <div class="btn-orasi-capsule" onclick="window.App.openVisiMisiModal(2)">
+                <span class="sparkle-icon sparkle-tl">&#10022;</span>
+                <span class="btn-orasi-text" id="labelOrasi3">ORASI PASLON 3</span>
+                <span class="sparkle-icon sparkle-br">&#10022;</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="section-footer-note">
+            SMAN 1 Pontianak &bull; Orasi Visi &amp; Misi Paslon Nomor Urut 03
+          </div>
+        </section>
+
+        <!-- SECTION 5: REAL-TIME QUICK COUNT 4 WARNA & TOMBOL MASUK BILIK -->
+        <section class="snap-section" id="sec-5">
+          <div class="crystal-overlay">
+            <div class="shard shard-tl"></div>
+            <div class="shard shard-tr"></div>
+          </div>
+
+          <div class="qc-stage">
+            <!-- Kartu Panel Quick Count Anonim -->
+            <div class="qc-card">
+              <div class="qc-header">
+                <div>
+                  <h3 class="qc-title">REAL-TIME QUICK COUNT</h3>
+                  <div style="font-size: 0.75rem; color: rgba(255, 255, 255, 0.75); margin-top: 2px;" id="qcLastUpdated">
+                    Memuat data sinkronisasi...
+                  </div>
+                </div>
+                <span class="qc-badge-anonim">Anonim &bull; Terenkripsi</span>
+              </div>
+
+              <div class="qc-donut-layout">
+                <!-- SVG Donut Chart 4 Warna Tanpa Keterangan Paslon Luar -->
+                <div class="donut-chart-container">
+                  <svg class="donut-svg" viewBox="0 0 190 190" id="donutSvgChart">
+                    <!-- Segmen Donut di-render dinamis oleh js/quickcount.js -->
+                  </svg>
+                  <div class="donut-center-info">
+                    <span class="donut-center-percent" id="donutCenterPercent">0%</span>
+                    <span class="donut-center-label" id="donutCenterSubtitle">Suara Masuk</span>
+                  </div>
+                </div>
+
+                <div class="qc-chart-hint" id="qcChartHint">
+                  <span class="hint-sparkle">&#10022;</span> Sentuh warna diagram untuk melihat rincian anonim
+                </div>
+              </div>
+
+              <!-- Metrik Ringkas Partisipasi DPT -->
+              <div style="display: flex; justify-content: space-around; margin-top: 14px; padding-top: 10px; border-top: 1px solid rgba(255,255,255,0.18); font-size: 0.8rem; color: rgba(255,255,255,0.85);">
+                <div>Suara Masuk: <strong id="metricSuaraMasuk">0</strong></div>
+                <div>Total DPT Sekolah: <strong id="metricTotalDpt">0</strong></div>
+              </div>
+            </div>
+
+            <!-- Tombol Utama Pintu Masuk Bilik Suara -->
+            <button type="button" class="btn-bilik-suara" onclick="window.App.openLoginModal()">
+              <span>MASUK BILIK SUARA</span>
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M5 12h14M12 5l7 7-7 7"/>
+              </svg>
+            </button>
+          </div>
+
+          <div class="section-footer-note">
+            &copy; 2026 Panitia Pemilihan OSIS SMAN 1 Pontianak &bull; Powered by ZianBOT Architecture
+          </div>
+        </section>
+
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         VIEW 2: BILIK SUARA STERIL (TIMER 180 DETIK & KARTU COBLOS)
+         ====================================================================== -->
+    <section class="spa-view" id="view-bilik">
+      <div class="bilik-container">
+        
+        <!-- Top Bar Identitas Pemilih & Countdown Timer -->
+        <header class="bilik-topbar">
+          <div class="user-identity">
+            <div class="user-avatar" id="voterAvatarInitials">P</div>
+            <div class="user-details">
+              <h4 id="voterFullName">Nama Pemilih</h4>
+              <p id="voterClassBadge">Kelas XII MIPA 1 &bull; SMAN 1 Pontianak</p>
+            </div>
+          </div>
+
+          <div class="timer-badge" id="timerBadge">
+            <span class="timer-label">Sisa Waktu</span>
+            <span class="timer-clock" id="timerClock">03:00</span>
+          </div>
+        </header>
+
+        <!-- Stage Surat Suara Pemilihan -->
+        <main class="bilik-stage">
+          <h2 class="bilik-prompt">TENTUKAN PILIHAN KETUA &amp; WAKIL KETUA OSIS</h2>
+          <div class="ballot-grid" id="ballotContainer">
+            <!-- Kartu Paslon di-render secara dinamis oleh js/vote.js -->
+          </div>
+        </main>
+
+        <footer class="section-footer-note">
+          Hak suara bersifat Langsung, Umum, Bebas, Rahasia, Jujur, dan Adil (LUBER JURDIL).
+        </footer>
+
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         VIEW 3: SELESAI & AUTO-RESET (BATCH 50 TABLET KIOSK)
+         ====================================================================== -->
+    <section class="spa-view" id="view-selesai">
+      <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; padding: 24px;">
+        <div class="selesai-stage">
+          <div class="success-badge">&#10003;</div>
+          <h2 class="selesai-title">TERIMA KASIH!</h2>
+          <p class="selesai-desc">
+            Hak suara Anda telah berhasil disimpan secara aman dan terenkripsi ke database e-voting sekolah.
+          </p>
+
+          <div style="background: rgba(0, 20, 50, 0.22); border-radius: 12px; padding: 12px; margin-bottom: 20px; font-size: 0.85rem;">
+            <p id="selesaiReceiptText" style="font-weight: 700; letter-spacing: 1px; color: #ffffff;">No. Registrasi: VTE-XXXX</p>
+            <p id="selesaiTimestampText" style="color: rgba(255, 255, 255, 0.78); margin-top: 4px;">Waktu Rekam: --:-- WIB</p>
+          </div>
+
+          <!-- Progress Bar Hitung Mundur 5 Detik Auto-Reset -->
+          <div class="auto-reset-bar-track">
+            <div class="auto-reset-bar-fill" id="autoResetBarFill"></div>
+          </div>
+          <div class="auto-reset-hint">
+            Tablet akan otomatis siap untuk pemilih berikutnya dalam <strong id="autoResetCountdownText">5 detik</strong>
+          </div>
+
+          <button 
+            type="button" 
+            class="btn-secondary" 
+            style="margin-top: 20px; border-color: rgba(255,255,255,0.4); color: #ffffff;"
+            onclick="window.VoteController.executeFinalReset()"
+          >
+            Selesai Sekarang
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- ======================================================================
+         MODAL 1: LOGIN AUTENTIKASI PEMILIH (INSTITUSIONAL & PROFESIONAL)
+         ====================================================================== -->
+    <div class="modal-overlay" id="modalLogin" role="dialog" aria-modal="true" aria-labelledby="modalLoginTitle">
+      <div class="modal-card modal-card-auth">
+        <button type="button" class="modal-close-btn" aria-label="Tutup" onclick="window.App.closeLoginModal()">&times;</button>
+        
+        <!-- Header Identitas Resmi: Logo Sekolah SMAN 1 Pontianak & E-Voting -->
+        <div class="auth-header-brand">
+          <div class="auth-brand-logos">
+            <img 
+              src="assets/images/sman1-pontianak.png" 
+              onerror="this.src='https://raw.githubusercontent.com/fauziopa/e-voting/main/assets/images/sman1-pontianak.png';" 
+              alt="Logo SMAN 1 Pontianak" 
+              class="auth-logo-school"
+            >
+            <img 
+              src="assets/images/e-voting.png" 
+              onerror="this.src='https://raw.githubusercontent.com/fauziopa/e-voting/main/assets/images/e-voting.png';" 
+              alt="Logo E-Voting OSIS" 
+              class="auth-logo-evoting"
+            >
+          </div>
+          <div class="auth-badge-school">SMAN 1 PONTIANAK &bull; PERIODE 2026/2027</div>
+          <h3 class="modal-title" id="modalLoginTitle">AUTENTIKASI PEMILIH</h3>
+        </div>
+
+        <form id="formLogin" onsubmit="window.App.handleLoginFormSubmit(event)">
+          <div class="form-group">
+            <div class="input-with-icon">
+              <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+              <input 
+                type="text" 
+                id="inputUsername" 
+                class="form-input" 
+                placeholder="Username" 
+                aria-label="Username"
+                autocomplete="off" 
+                required
+              >
+            </div>
+          </div>
+
+          <div class="form-group">
+            <div class="input-with-icon">
+              <svg class="input-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
+                <path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
+              </svg>
+              <input 
+                type="password" 
+                id="inputPassword" 
+                class="form-input form-input-token" 
+                placeholder="Password" 
+                aria-label="Password"
+                maxlength="10" 
+                autocomplete="off" 
+                required
+              >
+            </div>
+            <div class="form-hint-row">
+              <span class="hint-case">Format peka huruf besar/kecil</span>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-primary btn-auth-submit" id="btnLoginSubmit">
+            <span>MASUK</span>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M5 12h14M12 5l7 7-7 7"/>
+            </svg>
+          </button>
+        </form>
+
+        <div class="auth-card-footer">
+          Panitia Pemilihan OSIS SMAN 1 Pontianak &bull; Ganesha IT
+        </div>
+      </div>
+    </div>
+
+    <!-- ======================================================================
+         MODAL 2: KONFIRMASI COBLOS PASLON (ANTI-MISCLICK)
+         ====================================================================== -->
+    <div class="modal-overlay" id="modalKonfirmasi" role="dialog" aria-modal="true">
+      <div class="modal-card">
+        <h3 class="modal-title" style="color: #026bb0;">KONFIRMASI PILIHAN</h3>
+        <p class="modal-subtitle">Pastikan pilihan Anda sudah benar sebelum dikirimkan secara permanen.</p>
+
+        <div style="background: #f0f7ff; border: 1.5px solid #b9ddff; border-radius: 12px; padding: 16px; margin-bottom: 20px;">
+          <h4 id="konfirmasiTargetLabel" style="font-size: 1.25rem; font-weight: 800; color: #026bb0;">PASLON X</h4>
+          <p id="konfirmasiTargetNama" style="font-size: 0.95rem; color: #475569; margin-top: 4px;">Nama Paslon</p>
+        </div>
+
+        <button type="button" class="btn-primary" id="btnConfirmSubmit" onclick="window.VoteController.submitVoteTransaction()">
+          YA, SAYA YAKIN
+        </button>
+        <button type="button" class="btn-secondary" onclick="window.VoteController.closeConfirmModal()">
+          Ubah Pilihan Lain
+        </button>
+      </div>
+    </div>
+
+    <!-- ======================================================================
+         MODAL 3: DETAIL VISI & MISI PASLON DARI SPREADSHEET (MULTI-TAB)
+         ====================================================================== -->
+    <div class="modal-overlay" id="modalVisiMisi" role="dialog" aria-modal="true">
+      <div class="modal-card modal-visi-card">
+        <button type="button" class="modal-close-btn" aria-label="Tutup" onclick="window.App.closeVisiMisiModal()">&times;</button>
+        
+        <!-- Tab Navigasi Pemilihan Paslon 1, 2, 3 -->
+        <div class="visi-tab-bar" id="visiTabBar">
+          <button type="button" class="visi-tab-btn active" id="tabBtn0" onclick="window.App.switchVisiMisiTab(0)">PASLON 1</button>
+          <button type="button" class="visi-tab-btn" id="tabBtn1" onclick="window.App.switchVisiMisiTab(1)">PASLON 2</button>
+          <button type="button" class="visi-tab-btn" id="tabBtn2" onclick="window.App.switchVisiMisiTab(2)">PASLON 3</button>
+        </div>
+
+        <div class="visi-profile-header">
+          <div class="visi-avatar-frame">
+            <img id="visiModalFoto" src="" alt="Foto Paslon" referrerpolicy="no-referrer">
+          </div>
+          <div class="visi-header-meta">
+            <span class="badge-no-urut" id="visiModalBadge" style="position: static; display: inline-block;">01</span>
+            <h3 class="visi-modal-label" id="visiModalLabel">PASLON 1</h3>
+            <p class="visi-modal-names" id="visiModalNames">Nama Paslon</p>
+            <p class="visi-modal-slogan" id="visiModalSlogan">"Slogan Paslon"</p>
+          </div>
+        </div>
+
+        <div class="visi-content-scroll">
+          <h4 class="visi-heading">VISI &amp; MISI RESMI</h4>
+          <div class="visi-text-content" id="visiModalText">
+            Memuat data visi dan misi dari database sekolah...
+          </div>
+        </div>
+
+        <button type="button" class="btn-primary" style="margin-top: 18px;" onclick="window.App.closeVisiMisiModal()">
+          TUTUP
+        </button>
+      </div>
+    </div>
+
+    <!-- Toast Notification Container Global -->
+    <div class="toast-container" id="toastContainer"></div>
+
+  </main>
+
+  <!-- ======================================================================
+       LOAD MODULAR CLIENT-SIDE JAVASCRIPT SCRIPTS
+       ====================================================================== -->
+  <!-- 1. API Client & Local Mock Fallback -->
+  <script src="js/api.js"></script>
+  <!-- 2. Authentication & Session Security -->
+  <script src="js/auth.js"></script>
+  <!-- 3. Quick Count Donut Visualizer Engine (4 Warna) -->
+  <script src="js/quickcount.js"></script>
+  <!-- 4. Voting Booth Controller & Timer 180s Engine -->
+  <script src="js/vote.js"></script>
+  <!-- 5. SPA View Router & YouTube Pause Controller -->
+  <script src="js/app.js"></script>
+
+</body>
+</html>

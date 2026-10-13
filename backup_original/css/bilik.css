@@ -1,0 +1,402 @@
+/**
+ * ============================================================================
+ * E-VOTING OSIS SMAN 1 PONTIANAK - MODULAR CSS (BILIK SUARA & KIOSK ENGINE)
+ * File: css/bilik.css
+ * Developer: ZianBOT by zianxy
+ * Deskripsi: View Bilik Suara Steril, Countdown Timer 180s, Surat Suara
+ *            Rasio 3:4 Vertikal, Layar Selesai, & Auto-Reset Tablet Kiosk 5s.
+ * ============================================================================
+ */
+
+#view-bilik {
+  background: linear-gradient(180deg, #0282d3 0%, #0393ee 50%, #0168b0 100%);
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.bilik-container {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  padding: 16px 28px 20px 28px;
+  position: relative;
+  z-index: 2;
+}
+
+.bilik-topbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1.5px solid rgba(255, 255, 255, 0.4);
+  backdrop-filter: blur(14px);
+  padding: 10px 22px;
+  border-radius: 18px;
+  box-shadow: 0 10px 28px rgba(0, 35, 75, 0.2);
+  flex-shrink: 0;
+}
+
+.user-identity {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.user-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #026bb0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.15rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  flex-shrink: 0;
+}
+
+.user-details h4 {
+  font-size: 0.98rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 0.5px;
+}
+
+.user-details p {
+  font-size: 0.78rem;
+  color: rgba(255, 255, 255, 0.85);
+  font-weight: 500;
+  margin-top: 2px;
+}
+
+.timer-badge {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: rgba(0, 20, 45, 0.35);
+  border: 1.5px solid rgba(255, 255, 255, 0.35);
+  padding: 7px 18px;
+  border-radius: 30px;
+  backdrop-filter: blur(8px);
+  transition: var(--transition-smooth);
+}
+
+.timer-label {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.8);
+  letter-spacing: 1px;
+}
+
+.timer-clock {
+  font-family: var(--font-serif-sub);
+  font-size: 1.35rem;
+  font-weight: 800;
+  color: #ffffff;
+  letter-spacing: 2px;
+}
+
+.timer-badge.danger {
+  background: rgba(220, 38, 38, 0.8);
+  border-color: #fca5a5;
+  animation: pulseTimer 1s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+}
+
+@keyframes pulseTimer {
+  0%, 100% {
+    transform: scale(1);
+    box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+  }
+  50% {
+    transform: scale(1.05);
+    box-shadow: 0 0 24px rgba(239, 68, 68, 0.9);
+  }
+}
+
+.bilik-stage {
+  margin: auto 0;
+  width: 100%;
+  max-width: 1100px;
+  align-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+
+.bilik-prompt {
+  text-align: center;
+  font-family: var(--font-serif-sub);
+  font-size: clamp(1.15rem, 1.8vw, 1.45rem);
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: #ffffff;
+  margin-bottom: 16px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
+}
+
+.ballot-grid {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  align-items: stretch;
+}
+
+.ballot-card {
+  background: var(--card-white);
+  border-radius: 18px;
+  padding: 12px 12px 14px 12px;
+  text-align: center;
+  cursor: pointer;
+  position: relative;
+  transition: var(--transition-smooth);
+  box-shadow: 
+    0 14px 32px rgba(0, 45, 85, 0.22),
+    0 4px 10px rgba(0, 0, 0, 0.08);
+  border: 3px solid transparent;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.ballot-card > div:last-child {
+  width: 100%;
+}
+
+.ballot-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 
+    0 22px 42px rgba(0, 40, 80, 0.32),
+    0 6px 16px rgba(0, 0, 0, 0.12);
+  border-color: rgba(2, 147, 238, 0.5);
+}
+
+.ballot-card.selected {
+  border-color: #10b981;
+  box-shadow: 
+    0 0 30px rgba(16, 185, 129, 0.55),
+    0 16px 36px rgba(0, 40, 80, 0.3);
+  transform: translateY(-4px) scale(1.02);
+}
+
+/* Kunci Rasio Foto 3:4 Vertikal di Bilik Suara (Sinkron dengan Beranda) */
+.ballot-photo {
+  width: auto;
+  max-width: 100%;
+  height: clamp(190px, 32vh, 280px);
+  aspect-ratio: 3 / 4;
+  margin: 0 auto 10px auto;
+  border-radius: 14px;
+  overflow: hidden;
+  background: #eef5fa;
+  position: relative;
+  box-shadow: inset 0 0 0 1px rgba(0, 0, 0, 0.06);
+  flex-shrink: 0;
+  align-self: center;
+}
+
+.ballot-photo img {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  object-position: center top; /* Fokus tegak kepala dan jas kandidat */
+  display: block;
+}
+
+.ballot-check {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #e2e8f0;
+  color: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 800;
+  font-size: 1.1rem;
+  transition: var(--transition-smooth);
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.18);
+  z-index: 3;
+}
+
+.ballot-card.selected .ballot-check {
+  background: #10b981;
+  box-shadow: 0 0 14px rgba(16, 185, 129, 0.8);
+  transform: scale(1.08);
+}
+
+.ballot-card .card-label {
+  font-family: var(--font-serif-sub);
+  font-size: clamp(1.05rem, 1.5vw, 1.3rem);
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #2b3a4a;
+  text-transform: uppercase;
+  margin-top: 2px;
+}
+
+.ballot-card .card-names {
+  font-size: clamp(0.8rem, 1.05vw, 0.92rem);
+  font-weight: 600;
+  color: #5d7186;
+  margin-top: 2px;
+}
+
+.btn-coblos-submit {
+  width: 100%;
+  padding: 10px 14px;
+  margin-top: 10px;
+  border: none;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #028ce3, #00569e);
+  color: #ffffff;
+  font-family: var(--font-serif-sub);
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  cursor: pointer;
+  transition: var(--transition-smooth);
+  box-shadow: 0 6px 16px rgba(2, 140, 227, 0.3);
+}
+
+.btn-coblos-submit:hover {
+  background: linear-gradient(135deg, #0178c2, #004580);
+  box-shadow: 0 8px 20px rgba(2, 140, 227, 0.45);
+}
+
+.ballot-card.selected .btn-coblos-submit {
+  background: linear-gradient(135deg, #10b981, #059669);
+  box-shadow: 0 6px 18px rgba(16, 185, 129, 0.4);
+}
+
+#view-selesai {
+  background: linear-gradient(180deg, #0282d3 0%, #0393ee 50%, #0168b0 100%);
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.selesai-stage {
+  max-width: 520px;
+  width: 100%;
+  background: rgba(255, 255, 255, 0.18);
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
+  backdrop-filter: blur(16px);
+  border-radius: 24px;
+  padding: 32px 28px;
+  text-align: center;
+  box-shadow: 0 16px 42px rgba(0, 30, 60, 0.35);
+  animation: zoomSelesai 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+@keyframes zoomSelesai {
+  from { opacity: 0; transform: scale(0.9); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+.success-badge {
+  width: 70px;
+  height: 70px;
+  border-radius: 50%;
+  background: #10b981;
+  color: #ffffff;
+  font-size: 2.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 16px auto;
+  box-shadow: 0 0 25px rgba(16, 185, 129, 0.7);
+}
+
+.selesai-title {
+  font-family: var(--font-serif-sub);
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: 3px;
+  color: #ffffff;
+  margin-bottom: 8px;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
+}
+
+.selesai-desc {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.9);
+  line-height: 1.5;
+  margin-bottom: 20px;
+}
+
+.receipt-box {
+  background: rgba(0, 20, 50, 0.22);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-radius: 12px;
+  padding: 12px;
+  margin-bottom: 20px;
+  font-size: 0.85rem;
+}
+
+#selesaiReceiptText {
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #ffffff;
+}
+
+#selesaiTimestampText {
+  color: rgba(255, 255, 255, 0.78);
+  margin-top: 4px;
+}
+
+.auto-reset-bar-track {
+  width: 100%;
+  height: 8px;
+  background: rgba(255, 255, 255, 0.25);
+  border-radius: 6px;
+  overflow: hidden;
+  margin-bottom: 10px;
+}
+
+.auto-reset-bar-fill {
+  width: 100%;
+  height: 100%;
+  background: #38bdf8;
+  border-radius: 6px;
+  transition: width 5s linear;
+}
+
+.auto-reset-hint {
+  font-size: 0.8rem;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+@media (max-width: 1024px) {
+  .bilik-container { padding: 14px 20px 16px 20px; }
+  .ballot-grid { gap: 14px; }
+  .ballot-photo { height: clamp(170px, 28vh, 230px); max-height: none; }
+  .bilik-topbar { padding: 8px 18px; }
+}
+
+@media (max-width: 768px) {
+  .ballot-grid {
+    grid-template-columns: 1fr;
+    max-width: 290px;
+  }
+  .ballot-photo {
+    height: clamp(180px, 30vh, 250px);
+  }
+  .ballot-card:nth-child(n+2) {
+    display: none;
+  }
+  .bilik-prompt { font-size: 1.05rem; }
+  .timer-clock { font-size: 1.15rem; }
+}

@@ -1,0 +1,6 @@
+{
+  "name": "E-Voting OSIS SMAN 1 Pontianak",
+  "description": "Aplikasi E-Voting Pemilihan Ketua dan Wakil Ketua OSIS SMAN 1 Pontianak periode 2026/2027.",
+  "permissions": [],
+  "capabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
